@@ -82,4 +82,10 @@ document.querySelectorAll("[data-lang]").forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
 });
 
-setLanguage(localStorage.getItem("portfolio-language") || "en", false);
+const savedLanguage = localStorage.getItem("portfolio-language");
+const systemLanguages = navigator.languages?.length ? navigator.languages : [navigator.language];
+const systemLanguage = systemLanguages.some((language) =>
+  language.toLowerCase().startsWith("zh")
+) ? "zh" : "en";
+
+setLanguage(savedLanguage || systemLanguage, false);
